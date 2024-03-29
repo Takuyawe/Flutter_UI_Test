@@ -6,35 +6,45 @@ class BottomMenuBar extends StatelessWidget {
   const BottomMenuBar({super.key});
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabBar(
-      activeColor: Colors.indigo[800],
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.home),
-          label: 'Home',
+    return CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(
+          activeColor: Colors.indigo[800],
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.heart),
+              label: 'Favorite',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.calendar),
+              label: 'Calendar',
+            ),
+          ],
         ),
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.search),
-          label: 'Search',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.heart),
-          label: 'Favorite',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.calendar),
-          label: 'Calendar',
-        ),
-      ],
-      onTap: (value) => {
-        if (value == 3)
-          {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CustomCalendar()),
-            )
+        tabBuilder: (context, index) {
+          switch (index) {
+            case 3:
+              return CupertinoTabView(builder: (context) {
+                return const CupertinoPageScaffold(
+                    navigationBar:
+                        CupertinoNavigationBar(leading: Text('Home')),
+                    child: CustomCalendar());
+              });
+            default:
+              return CupertinoTabView(builder: (context) {
+                return const CupertinoPageScaffold(
+                    navigationBar:
+                        CupertinoNavigationBar(leading: Text('Home')),
+                    child: Text("Default"));
+              });
           }
-      },
-    );
+        });
   }
 }
