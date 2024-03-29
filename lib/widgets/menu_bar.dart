@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:study_ui/widgets/calender/calender.dart';
+import 'package:study_ui/widgets/home/home_screen.dart';
 
 class BottomMenuBar extends StatelessWidget {
   const BottomMenuBar({super.key});
@@ -8,7 +9,10 @@ class BottomMenuBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
-          activeColor: Colors.indigo[800],
+          height: 50,
+          backgroundColor: Colors.indigo[800],
+          activeColor: Colors.white,
+          inactiveColor: Colors.white70,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.home),
@@ -30,11 +34,18 @@ class BottomMenuBar extends StatelessWidget {
         ),
         tabBuilder: (context, index) {
           switch (index) {
-            case 3:
+            case 0:
               return CupertinoTabView(builder: (context) {
                 return const CupertinoPageScaffold(
                     navigationBar:
                         CupertinoNavigationBar(leading: Text('Home')),
+                    child: HomeScreen());
+              });
+            case 3:
+              return CupertinoTabView(builder: (context) {
+                return const CupertinoPageScaffold(
+                    navigationBar:
+                        CupertinoNavigationBar(leading: Text('Calendar')),
                     child: CustomCalendar());
               });
             default:
