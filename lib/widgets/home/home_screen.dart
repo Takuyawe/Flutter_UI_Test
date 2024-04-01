@@ -3,15 +3,17 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:study_ui/main.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   late SharedPreferences prefs;
   double _value = 0.0;
   List checkedChips = [];
@@ -78,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeMode currentThemeMode = ref.watch(themeMode);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -119,6 +122,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       isActive: index == _currentStep,
                     );
                   }))),
+          IconButton(
+              onPressed: () => {
+                    ref.watch(themeMode.notifier).state =
+                        currentThemeMode == ThemeMode.light
+                            ? ThemeMode.dark
+                            : ThemeMode.light
+                  },
+              icon: const Icon(Icons.dark_mode),
+              iconSize: 36,
+              splashRadius: 10,
+              splashColor: Colors.red[900],
+              color: Colors.purple[600],
+              style: ButtonStyle(
+                  backgroundColor: currentThemeMode == ThemeMode.dark
+                      ? MaterialStateProperty.all(Colors.white)
+                      : MaterialStateProperty.all(Colors.black))),
           // DatePickerDialog(
           //   firstDate: DateTime.utc(2010, 1, 1),
           //   lastDate: DateTime.utc(2030, 1, 1),
@@ -134,10 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
           //   },
           //   restorationId: 'date_picker_dialog',
           // )
-          if (isError)
-            const CupertinoAlertDialog(
-              title: Text("Error"),
-            )
         ],
       ),
     );

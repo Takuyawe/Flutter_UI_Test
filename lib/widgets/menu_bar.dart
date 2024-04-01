@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:study_ui/widgets/calender/calender.dart';
+import 'package:study_ui/widgets/favorites/freezed_user_page.dart';
 import 'package:study_ui/widgets/home/home_screen.dart';
 
 class BottomMenuBar extends StatelessWidget {
@@ -40,6 +41,13 @@ class BottomMenuBar extends StatelessWidget {
                     navigationBar:
                         CupertinoNavigationBar(leading: Text('Home')),
                     child: HomeScreen());
+              });
+            case 2:
+              return CupertinoTabView(builder: (context) {
+                return const CupertinoPageScaffold(
+                    navigationBar:
+                        CupertinoNavigationBar(leading: Text('Home')),
+                    child: FreezedUserPage());
               });
             case 3:
               return CupertinoTabView(builder: (context) {
